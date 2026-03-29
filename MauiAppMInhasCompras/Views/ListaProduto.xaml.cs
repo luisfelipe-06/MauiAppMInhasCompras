@@ -138,8 +138,10 @@ public partial class ListaProduto : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Ops", ex.Message, "OK");
-        } finally
+        }
+        finally
         {
             lst_produtos.IsRefreshing = false;
         }
+    }
 }
