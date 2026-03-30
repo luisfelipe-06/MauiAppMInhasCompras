@@ -1,7 +1,9 @@
 ﻿using SQLite;
+using System.Numerics;
 
 namespace MauiAppMInhasCompras.Models
 {
+    [Table("tb_produto")]
     public class Produto
     {
         string _descricao;
@@ -44,6 +46,10 @@ namespace MauiAppMInhasCompras.Models
                 _preco = value;
             }
         }
+
+        public string Categoria { get; set; }
+
+        [Ignore]
         public double Total { get => Quantidade * Preco; }
     }
 }

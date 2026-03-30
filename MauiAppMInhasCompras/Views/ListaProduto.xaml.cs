@@ -144,4 +144,48 @@ public partial class ListaProduto : ContentPage
             lst_produtos.IsRefreshing = false;
         }
     }
+
+    private async void picker_filtro_categoria_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            lst_produtos.IsRefreshing = true;
+            lista.Clear();
+
+            string categoriaSelecionada = picker_filtro_categoria.SelectedItem?.ToString();
+
+            List<Produto> tmp;
+
+            if (string.IsNullOrEmpty(categoriaSelecionada) || categoriaSelecionada == "Todas")
+            {
+                tmp = await App.Db.GetAll();
+            }
+            else
+            {
+                tmp = await App.Db.SearchByCategoria(categoriaSelecionada);
+            }
+
+            tmp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
+        finally
+        {
+            lst_produtos.IsRefreshing = false;
+        }
+    }
+
+    private async void ToolbarItem_Clicked_3(object sender, EventArgs e)
+    {
+        try
+        {
+            await Navigation.PushAsync(new RelatorioCategoria());
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
+    }
 }
